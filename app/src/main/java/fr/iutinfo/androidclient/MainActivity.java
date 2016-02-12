@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -55,6 +56,14 @@ public class MainActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, users);
         mListView.setAdapter(mAdapter);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                startActivity(intent);
+            }
+        });
+
         load();
     }
 
@@ -80,7 +89,7 @@ public class MainActivity extends ActionBarActivity {
 
                         users.clear();
                         for (User user : userList) {
-                            users.add(user.getName() + " (" + user.getAlias() + ")");
+                            users.add(user.getDisplayName());
                         }
 
                         if (users.isEmpty()) {

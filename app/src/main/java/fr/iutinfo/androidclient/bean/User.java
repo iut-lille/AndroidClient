@@ -27,4 +27,9 @@ public class User {
     public String getAlias() {
         return alias;
     }
+
+    public String getDisplayName() {
+
+        return getAlias() == null || getAlias().isEmpty() ? getName() : getName() + " (" + getAlias() + ")";
+    }
 }

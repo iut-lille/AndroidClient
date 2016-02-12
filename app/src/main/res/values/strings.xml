@@ -14,5 +14,9 @@
     <string name="alias_title">Alias</string>
     <string name="submit_add">Ajouter</string>
     <string name="cancel">Annuler</string>
+    <string name="title_activity_edit">EditActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
