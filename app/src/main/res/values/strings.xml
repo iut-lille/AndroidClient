@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AndroidClient</string>
+    <string name="activity_main_title">Liste des utilisateurs</string>
+    <string name="activity_add_title">Ajouter un utilisateur</string>
+
+    <string name="action_refresh">Actualiser</string>
+    <string name="action_add">Ajouter un utilisateur</string>
+
+    <string name="empty_list">Aucun utilisateur</string>
+    <string name="error">Erreur : %s</string>
+    <string name="title_activity_add">AddActivity</string>
+
+    <string name="name_title">Nom (*)</string>
+    <string name="alias_title">Alias</string>
+    <string name="submit_add">Ajouter</string>
+    <string name="cancel">Annuler</string>
+
+</resources>
