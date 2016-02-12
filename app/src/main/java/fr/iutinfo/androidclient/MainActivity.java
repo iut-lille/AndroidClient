@@ -37,8 +37,9 @@ public class MainActivity extends ActionBarActivity {
     private ListView mListView;
     private ProgressBar mProgressBar;
 
-    private List<String> users;
+    private List<User> users;
     private ArrayAdapter<String> mAdapter;
+    private List<String> values;
 
 
     @Override
@@ -51,15 +52,19 @@ public class MainActivity extends ActionBarActivity {
         mListView = (ListView) findViewById(R.id.list);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
 
-        users = new ArrayList<String>();
+        users = new ArrayList<User>();
+        values = new ArrayList<String>();
         mAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1, users);
+                android.R.layout.simple_list_item_1, values);
         mListView.setAdapter(mAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                intent.putExtra("id", users.get(i).getId());
+                intent.putExtra("name", users.get(i).getName());
+                intent.putExtra("alias", users.get(i).getAlias());
                 startActivity(intent);
             }
         });
@@ -85,11 +90,11 @@ public class MainActivity extends ActionBarActivity {
 
                         Type listType = new TypeToken<List<User>>() {
                         }.getType();
-                        List<User> userList = gson.fromJson(json, listType);
+                        users = gson.fromJson(json, listType);
 
-                        users.clear();
-                        for (User user : userList) {
-                            users.add(user.getDisplayName());
+                        values.clear();
+                        for (User user : users) {
+                            values.add(user.toString());
                         }
 
                         if (users.isEmpty()) {

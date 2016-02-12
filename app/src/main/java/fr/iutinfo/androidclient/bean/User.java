@@ -5,11 +5,16 @@ package fr.iutinfo.androidclient.bean;
  */
 public class User {
 
+    private int id;
     private String name;
     private String alias;
 
     public User() {
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {
@@ -28,8 +33,9 @@ public class User {
         return alias;
     }
 
-    public String getDisplayName() {
-
+    @Override
+    public String toString() {
         return getAlias() == null || getAlias().isEmpty() ? getName() : getName() + " (" + getAlias() + ")";
     }
+
 }
