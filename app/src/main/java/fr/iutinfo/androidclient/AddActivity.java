@@ -3,8 +3,8 @@ package fr.iutinfo.androidclient;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,37 +12,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import fr.iutinfo.androidclient.bean.User;
+
+import static fr.iutinfo.androidclient.Configuration.SERVER;
 
 
 public class AddActivity extends ActionBarActivity {
 
-    private final String URL = "http://192.168.1.18:8080/v1/user";
 
-    private TextView mNameTitle;
-    private EditText mNameEdit;
-    private EditText mAliasEdit;
-    private ProgressBar mProgressBar;
+    private final String URL = SERVER + "/v1/user";
+
+    private TextView nameTitle;
+    private EditText nameEdit;
+    private EditText aliasEdit;
+    private ProgressBar progressBar;
     private Button mSubmit;
     private Button mCancel;
-    private TextView mTextView;
+    private TextView textError;
 
     private ColorStateList defaultColor;
 
@@ -52,26 +43,26 @@ public class AddActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add);
         setTitle(R.string.activity_add_title);
 
-        mNameTitle = (TextView) findViewById(R.id.name_title);
-        mNameEdit = (EditText) findViewById(R.id.edit_name);
-        mAliasEdit = (EditText) findViewById(R.id.edit_alias);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress);
+        nameTitle = (TextView) findViewById(R.id.name_title);
+        nameEdit = (EditText) findViewById(R.id.edit_name);
+        aliasEdit = (EditText) findViewById(R.id.edit_alias);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
         mSubmit = (Button) findViewById(R.id.submit);
         mCancel = (Button) findViewById(R.id.cancel);
-        mTextView = (TextView) findViewById(R.id.textView);
+        textError = (TextView) findViewById(R.id.textView);
 
-        defaultColor = mNameTitle.getTextColors();
+        defaultColor = nameTitle.getTextColors();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mProgressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
         mSubmit.setEnabled(true);
         mCancel.setEnabled(true);
-        mNameTitle.setTextColor(defaultColor);
-        mNameEdit.setText("");
-        mAliasEdit.setText("");
+        nameTitle.setTextColor(defaultColor);
+        nameEdit.setText("");
+        aliasEdit.setText("");
     }
 
     @Override
@@ -83,21 +74,21 @@ public class AddActivity extends ActionBarActivity {
     public void submit(View v) {
 
         User user = new User();
-        user.setName(mNameEdit.getText().toString());
-        user.setAlias(mAliasEdit.getText().toString());
+        user.setName(nameEdit.getText().toString());
+        user.setAlias(aliasEdit.getText().toString());
 
-        mNameTitle.setTextColor(defaultColor);
+        nameTitle.setTextColor(defaultColor);
 
         if (user.getName().isEmpty()) {
 
-            mNameTitle.setTextColor(Color.RED);
+            nameTitle.setTextColor(Color.RED);
             return;
         }
 
         final Gson gson = new GsonBuilder().create();
-        final String json = gson.toJson(user);
+        final String userAsJson = gson.toJson(user);
 
-        mProgressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         mSubmit.setEnabled(false);
         mCancel.setEnabled(false);
 
@@ -114,15 +105,15 @@ public class AddActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                mProgressBar.setVisibility(View.GONE);
-                mTextView.setText(getString(R.string.error, error.getMessage()));
-                mTextView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                textError.setText(getString(R.string.error, error.getMessage()));
+                textError.setVisibility(View.VISIBLE);
             }
         }) {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                return json.getBytes();
+                return userAsJson.getBytes();
             }
 
             @Override

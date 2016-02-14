@@ -1,8 +1,5 @@
 package fr.iutinfo.androidclient.bean;
 
-/**
- * Created by julien on 10/02/16.
- */
 public class User {
 
     private int id;
@@ -17,20 +14,20 @@ public class User {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAlias() {
         return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     @Override

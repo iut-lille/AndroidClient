@@ -4,5 +4,5 @@ local.properties
 /build
 /captures
 *~
-.idea
+.idea/
 *.iml
